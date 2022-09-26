@@ -1,43 +1,62 @@
 const database = require('../models/userModel');
 const signupController =async(req,res)=>{
-     try{
         const username=req.body.username;
         const email=req.body.email;
         const password=req.body.password;
-        const signupdata ={'username':username,'email':email,'password':password}
-        if((username!=='')&&(email!=='')&&(password!=='')){
-                    const result=await database.signup(signupdata);
-                    if(result.err){
-                        res.json({success:false,message:result.err});
+        const signupdata ={'username':username,'email':email,'password':password};
+        if(username.length==0){
+            res.status(200).send({success:false,message:"Username is empty"});
+        }
+        else if(email.length==0){
+            res.status(200).send({success:false,message:"Email is empty"});
+        }
+        else if(password.length==0){
+            res.status(200).send({success:false,message:"Password is empty"});
+        }
+        else{
+             const result=await database.signup(signupdata);
+                if(result.values){
+                        res.status(200).json({success:true,message:'Signup successfull'});
                     }
-                    if(result.value){
-                        res.json({success:true,message:result.value});
+                else if (result.err){
+                        console.log(result.err.errno);
+                        if(result.err.errno===1062){
+                                 res.status(200).json({success:false,message:'Email already exists'});
+                        }
+                        else{
+                            console.log(result.err);
+                            res.status(500).json({success:false,message:'Internal server error'})
+                        }
                     }
         }
     }
-    catch(e){
-        return res.status(500).json({ success: false })
-    }
-};
+    
 const loginController =async(req,res)=>{
     try{
         const username=req.body.username;
         const password=req.body.password;
-        const logdata = {"username":username,"password":password}
-        // console.log("controller login reached1");
-        const result = await database.login(logdata);
-        console.log(result.values);
-        if((result.values).length>0){
-            // console.log('result.values');
-            res.json({success:true,message:result.values});
+        const logdata = {"username":username,"password":password};
+        console.log(username);
+        if(username.length==0){
+            res.status(200).send({success:false,message:"Username is empty"});
         }
-        else{
-            res.json({success:false,message:"wrong credential"});
-        }  
-}
-catch(err){
-    res.status(500).json({success:false});
-}
+        else if(password.length==0){
+            res.status(200).send({success:false,message:"Password is empty"});
+        }
+       else{
+        const result = await database.login(logdata);
+            if((result.values).length>0){
+                res.json({success:true,message:'Login successfull'});
+            }
+            else{
+                res.json({success:false,message:"Wrong credential"});
+            } 
+       }
+         
+    }
+    catch(err){
+        res.status(500).json({success:false,message:'Internal server error'});
+    }
 }
 module.exports = {signupController,loginController};
 
