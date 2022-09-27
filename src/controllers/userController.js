@@ -1,4 +1,8 @@
 const database = require('../models/userModel');
+const jwt =require('jsonwebtoken');
+createToken = (id)=>{
+	return jwt.sign({id},'secret_token,{exipiresIn:60m}');	
+}
 const signupController =async(req,res)=>{
         const username=req.body.username;
         const email=req.body.email;
@@ -19,12 +23,12 @@ const signupController =async(req,res)=>{
                         res.status(200).json({success:true,message:'Signup successfull'});
                     }
                 else if (result.err){
-                        console.log(result.err.errno);
+                        // console.log(result.err.errno);
                         if(result.err.errno===1062){
                                  res.status(200).json({success:false,message:'Email already exists'});
                         }
                         else{
-                            console.log(result.err);
+                            // console.log(result.err);
                             res.status(500).json({success:false,message:'Internal server error'})
                         }
                     }
@@ -36,7 +40,7 @@ const loginController =async(req,res)=>{
         const username=req.body.username;
         const password=req.body.password;
         const logdata = {"username":username,"password":password};
-        console.log(username);
+        // console.log(username);
         if(username.length==0){
             res.status(200).send({success:false,message:"Username is empty"});
         }
@@ -46,7 +50,10 @@ const loginController =async(req,res)=>{
        else{
         const result = await database.login(logdata);
             if((result.values).length>0){
-                res.json({success:true,message:'Login successfull'});
+                const id = result.values[0].id;
+                const token = createToken(id);
+                console.log(token);
+                res.json({success:true,message:'Login successfull',token:token});
             }
             else{
                 res.json({success:false,message:"Wrong credential"});

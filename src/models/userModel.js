@@ -10,7 +10,6 @@ const signup = async(signupdata)=>{
 
             console.log(e);
             return {'err':e}; 
-
     }
     finally{
         await db.close();
