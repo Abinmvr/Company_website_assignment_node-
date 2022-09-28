@@ -3,7 +3,6 @@ console.log('insight controller');
 const insightController = async(req,res)=>{
     try{
         const result = await insights();
-        console.log("result",result);
         res.status(200).json({message:result});
     }
     catch(e){

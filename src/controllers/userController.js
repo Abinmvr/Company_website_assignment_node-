@@ -1,8 +1,12 @@
 const database = require('../models/userModel');
 const jwt =require('jsonwebtoken');
+
+
 createToken = (id)=>{
-	return jwt.sign({id},'secret_token,{exipiresIn:60m}');	
+	return jwt.sign({id},'secret_token');	
 }
+
+
 const signupController =async(req,res)=>{
         const username=req.body.username;
         const email=req.body.email;

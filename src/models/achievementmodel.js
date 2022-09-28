@@ -3,10 +3,10 @@ const achievements = async()=>{
     const db = await createdb();
     try{
         const achievements_data=await db.query("SELECT title,image,details FROM achievements");
-        return achievements_data;  
+        return {'data':achievements_data};  
     }
     catch(e){
-            return e;     
+            return {'error':e};     
     }
     finally{
             await db.close();
