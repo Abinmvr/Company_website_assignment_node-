@@ -1,7 +1,8 @@
 const express = require('express');
-const checklogged =require('../Middleware/checkLogged');
+const {checkLogged} =require('../Middleware/checkLogged');
 const router = express.Router();
-const {insightController} =require('../controllers/insightsController');
-console.log('insight router rached');
-router.get("/insights",insightController);
+const {achievementsController} =require('../controllers/achieveController');
+// const authMiddleware=require('../Middleware/checkLogged');
+console.log('achieve router reached');
+router.get("/achievements",checkLogged, achievementsController);
 module.exports = router;
