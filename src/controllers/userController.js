@@ -1,73 +1,56 @@
 const database = require('../models/userModel');
 const jwt =require('jsonwebtoken');
-
-
 createToken = (id)=>{
 	return jwt.sign({id},'secret_token');	
 }
 
-
 const signupController =async(req,res)=>{
-        const username=req.body.username;
-        const email=req.body.email;
-        const password=req.body.password;
-        const signupdata ={'username':username,'email':email,'password':password};
-        if(username.length==0){
-            res.status(200).send({success:false,message:"Username is empty"});
-        }
-        else if(email.length==0){
-            res.status(200).send({success:false,message:"Email is empty"});
-        }
-        else if(password.length==0){
-            res.status(200).send({success:false,message:"Password is empty"});
+    const {username,email,password} = req.body;
+    const signupdata ={'username':username,'email':email,'password':password};
+    try{ 
+        if((!username)||(!email)||(!password)){
+            res.status(200).send({success:false,message:"Fields cannot be empty"});
         }
         else{
-             const result=await database.signup(signupdata);
-                if(result.values){
-                        res.status(200).json({success:true,message:'Signup successfull'});
-                    }
-                else if (result.err){
-                        // console.log(result.err.errno);
-                        if(result.err.errno===1062){
-                                 res.status(200).json({success:false,message:'Email already exists'});
-                        }
-                        else{
-                            // console.log(result.err);
-                            res.status(500).json({success:false,message:'Internal server error'})
-                        }
-                    }
+            const result=await database.signup(signupdata);
+            if(result){
+            res.status(200).json({success:true,message:'Signup successfull'});
+            }
         }
     }
-    
+    catch(error){
+        if(error.errno===1062){
+            res.status(200).json({success:false,message:'Email already exists'});
+        }
+        else{
+            res.status(500).json({success:false,message:'Internal server error'})
+        }
+    }
+}
+
 const loginController =async(req,res)=>{
     try{
-        const username=req.body.username;
-        const password=req.body.password;
+        const {username,password} = req.body;
         const logdata = {"username":username,"password":password};
-        // console.log(username);
-        if(username.length==0){
-            res.status(200).send({success:false,message:"Username is empty"});
+        if((!username)||(!password)){
+            res.status(200).send({success:false,message:"Fields cannot be empty"});
         }
-        else if(password.length==0){
-            res.status(200).send({success:false,message:"Password is empty"});
-        }
-       else{
-        const result = await database.login(logdata);
-            if((result.values).length>0){
-                const id = result.values[0].id;
+        else{
+            const result = await database.login(logdata);
+            if(result.length>0){
+                const id = result[0].id;
                 const token = createToken(id);
-                console.log(token);
-                res.json({success:true,message:'Login successfull',token:token});
+                res.status(200).send({success:true,message:'Login successfull',token:token});
             }
             else{
-                res.json({success:false,message:"Wrong credential"});
+                res.status(200).send({success:false,message:"Wrong credential"});
             } 
        }
-         
     }
     catch(err){
         res.status(500).json({success:false,message:'Internal server error'});
     }
 }
+
 module.exports = {signupController,loginController};
 
