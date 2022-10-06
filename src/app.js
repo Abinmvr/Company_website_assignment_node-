@@ -8,12 +8,17 @@ app.use((req,res,next)=>{
     next();
 });
 app.use(express.json());
-const userRoutes = require('./routes/userRoutes');
-const insightRoutes =require('./routes/insightsRouter');
-const achieveRoutes =require('./routes/achievementRouter');
+const userRoutes = require('./routes/user_Routes/userRoutes');
+const insightRoutes =require('./routes/user_Routes/insightsRouter');
+const achieveRoutes =require('./routes/user_Routes/achievementRouter');
+const admin_achieveRoutes = require('./routes/admin_Routes/admin_achieve_routes');
+const admin_insightsRoutes = require('./routes/admin_Routes/admin_insights_router')
 app.use('/',userRoutes);
 app.use('/',insightRoutes);
 app.use('/',achieveRoutes);
+app.use('/',admin_achieveRoutes);
+app.use('/',admin_insightsRoutes);
+
 app.listen(3001,()=>{
     console.log("running server");
 })

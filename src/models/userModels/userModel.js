@@ -1,4 +1,4 @@
-const {createdb} = require('../library/db_config');
+const {createdb} = require('../../library/db_config');
 const signup = async(signupdata)=>{
     const db = await createdb();
     try{

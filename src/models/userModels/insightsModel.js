@@ -1,8 +1,8 @@
-const {createdb} =require('../library/db_config');
+const {createdb} =require('../../library/db_config');
 const insights = async()=>{
     const db = await createdb();
     try{
-        const insight_data=await db.query("SELECT title,image,details FROM insights");
+        const insight_data=await db.query("SELECT id,title,image,details FROM insights");
         return insight_data;  
     }
     catch(e){
