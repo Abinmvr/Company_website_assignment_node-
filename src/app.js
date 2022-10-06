@@ -1,3 +1,4 @@
+const config =require('../config.js');
 const express = require('express');
 const app = express();
 app.use((req,res,next)=>{
@@ -19,6 +20,11 @@ app.use('/',achieveRoutes);
 app.use('/',admin_achieveRoutes);
 app.use('/',admin_insightsRoutes);
 
-app.listen(3001,()=>{
-    console.log("running server");
+// app.listen(3001,()=>{
+//     console.log("running server");
+// })
+
+console.log(`NODE_ENV=${config.NODE_ENV}`);
+app.listen(config.PORT, config.HOST, () => {
+    console.log(`APP LISTENING ON http://${config.HOST}:${config.PORT}`);
 })
