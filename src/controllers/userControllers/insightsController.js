@@ -1,5 +1,4 @@
-const {insights} =require('../models/insightsModel');
-console.log('insight controller');
+const {insights} =require('../../models/userModels/insightsModel');
 const insightController = async(req,res)=>{
     try{
         const result = await insights();

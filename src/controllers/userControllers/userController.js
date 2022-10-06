@@ -1,4 +1,4 @@
-const database = require('../models/userModel');
+const database = require('../../models/userModels/userModel');
 const jwt =require('jsonwebtoken');
 createToken = (id)=>{
 	return jwt.sign({id},'secret_token');	
