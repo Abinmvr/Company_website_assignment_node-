@@ -9,20 +9,25 @@ app.use((req,res,next)=>{
     next();
 });
 app.use(express.json());
-const userRoutes = require('./routes/user_Routes/userRoutes');
+const userRoutes = require('./routes/user_Routes/authRoutes');
 const insightRoutes =require('./routes/user_Routes/insightsRouter');
 const achieveRoutes =require('./routes/user_Routes/achievementRouter');
+const jobRoutes = require('./routes/user_Routes/jobRouter');
+
 const admin_achieveRoutes = require('./routes/admin_Routes/admin_achieve_routes');
-const admin_insightsRoutes = require('./routes/admin_Routes/admin_insights_router')
+const admin_insightsRoutes = require('./routes/admin_Routes/admin_insights_router');
+const admin_jobRoutes = require('./routes/admin_Routes/admin_job_router');
+const admin_applicantRoutes = require('./routes/admin_Routes/admin_applicant_router');
+
 app.use('/',userRoutes);
 app.use('/',insightRoutes);
 app.use('/',achieveRoutes);
+app.use('/',jobRoutes);
+
 app.use('/',admin_achieveRoutes);
 app.use('/',admin_insightsRoutes);
-
-// app.listen(3001,()=>{
-//     console.log("running server");
-// })
+app.use('/',admin_jobRoutes);
+app.use('/',admin_applicantRoutes);
 
 console.log(`NODE_ENV=${config.NODE_ENV}`);
 app.listen(config.PORT, config.HOST, () => {

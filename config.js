@@ -8,5 +8,8 @@ dotenv.config({
 module.exports = {
     NODE_ENV : process.env.NODE_ENV || 'development',
     HOST : process.env.HOST || 'localhost',
-    PORT : process.env.PORT || 3001
-}
+    PORT : process.env.PORT || 3001,
+    USER : process.env.USER || 'root',
+    PASSWORD : process.env.PASSWORD || 'password',
+    DATABASE : process.env.DATABASE || 'company_website'
+} 

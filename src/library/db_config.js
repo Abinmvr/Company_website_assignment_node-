@@ -1,11 +1,12 @@
 const util =require('util');
 const mysql = require('mysql');
+const config =require('../../config.js');
 function createdb(){
       const dbconfig = {
-                user:"root",
-                host:"localhost",
-                password:"password",
-                database:"company_website"
+                user:config.USER,
+                host:config.HOST,
+                password:config.PASSWORD,
+                database:config.DATABASE
        };
     const connection =mysql.createConnection(dbconfig);
     return {
