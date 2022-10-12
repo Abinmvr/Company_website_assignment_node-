@@ -31,4 +31,6 @@ const delete_applicant_model = async(id)=>{
             await db.close();
     }
 }
+
+
 module.exports = {get_applicant_model,delete_applicant_model }
