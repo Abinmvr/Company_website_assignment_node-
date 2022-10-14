@@ -20,8 +20,8 @@ const get_achievements_Controller = async(req,res)=>{
 }
 
 const get_achievements_controller_ById = async(req,res)=>{
-    const id = req.query.id;
     try{
+        const id = req.query.id;
         if((!id)){
             res.status(200).send({success:false,message:"id is empty"});
         }
@@ -41,10 +41,11 @@ const get_achievements_controller_ById = async(req,res)=>{
 }
 
 const add_achieve_Controller = async(req,res)=>{
-    const {title,details,image} = req.body;
-    const addData ={'title':title,'details':details,'image':image};
-    
     try{
+        const {title,details} = req.body;
+        const image=req.file.filename;
+        const addData ={'title':title,'details':details,'image':image};
+        
         if((!title)||(!details)||(!image)){
             res.status(200).send({success:false,message:"fields cannot be empty"});
         }
@@ -60,9 +61,10 @@ const add_achieve_Controller = async(req,res)=>{
     
     }
 }
+
 const delete_achieve_Controller = async(req,res)=>{
-    const id = req.query.id;
     try{
+        const id = req.query.id;
         if((!id)){
             res.status(200).send({success:false,message:"id is empty"});
         }
@@ -80,12 +82,18 @@ const delete_achieve_Controller = async(req,res)=>{
 }
 
 const update_achieve_Controller = async(req,res)=>{
-    const {id,title,details,image} = req.body;
-    const editData ={'id':id,'title':title,'details':details,'image':image};
-    console.log(editData)
-    
     try{
-        if((!title)||(!details)||(!image)||(!id)){
+        const {id,title,details} = req.body;
+        let image
+        if(req.file==undefined){
+            // console.log('file4',req.file);
+            image ='';
+        }else{
+            // console.log('file4',req.file);
+            image=req.file.filename;
+        }
+        const editData ={'id':id,'title':title,'details':details,'image':image};
+        if((!title)||(!details)||(!id)){
             res.status(200).send({success:false,message:"fields cannot be empty"});
         }
         else{
@@ -96,6 +104,7 @@ const update_achieve_Controller = async(req,res)=>{
         }
     }
     catch(error){
+            console.log('controller',error);
             res.status(500).json({success:false,message:'Internal server error'})
     
     }

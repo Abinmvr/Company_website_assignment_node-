@@ -12,8 +12,9 @@ catch(e){
 }
 
 const delete_applicant_Controller = async(req,res)=>{
-    const id = req.query.id;
     try{
+        const id = req.query.id;
+
         if((!id)){
             res.status(200).send({success:false,message:"id is empty"});
         }

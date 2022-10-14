@@ -1,16 +1,16 @@
 const multer  = require('multer');
 const path =require('path');
-const maxSize = 2*1024*1024;
+const maxSize = 1*1024*1024;
 const storage = multer.diskStorage({
   destination: (req, file, cb) =>{
-    cb(null, 'Resumes/pdf')
+    cb(null, 'Images')
   },
   filename:(req, file, cb) =>{
-    // console.log('org',file.originalname)
+    // console.log('file3',file);
     cb(null,`${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`)
   }
 })
-const upload = multer({storage: storage,limits:{fileSize: maxSize}});
+const uploadImages = multer({storage: storage,limits:{fileSize: maxSize}});
 
  
-module.exports={upload};
+module.exports={uploadImages};
