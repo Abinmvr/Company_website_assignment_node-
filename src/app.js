@@ -29,6 +29,9 @@ app.use('/',admin_insightsRoutes);
 app.use('/',admin_jobRoutes);
 app.use('/',admin_applicantRoutes);
 
+app.use('/',express.static('Resumes/pdf'));
+app.use('/',express.static('Images'));
+
 console.log(`NODE_ENV=${config.NODE_ENV}`);
 app.listen(config.PORT, config.HOST, () => {
     console.log(`APP LISTENING ON http://${config.HOST}:${config.PORT}`);

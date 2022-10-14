@@ -13,7 +13,7 @@ const jobController = async(req,res)=>{
 const apply_job_Controller = async(req,res)=>{
     try{
         const {id,name,email,experience}= req.body;
-        console.log('req send',req.file.filename)
+        console.log('req send',req.file.filesize);
         const resume=req.file.filename
         const addData ={job_id:id,
                         name:name,
@@ -32,6 +32,7 @@ const apply_job_Controller = async(req,res)=>{
         }
     }
     catch(error){
+            console.log('error',error)
             res.status(500).json({success:false,message:'Internal server error'})
     
     }

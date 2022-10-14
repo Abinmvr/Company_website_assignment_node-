@@ -25,7 +25,8 @@ const apply_job_model = async(addData)=>{
         return 'success';
     }
     catch(err){
-            throw  err;
+            // throw  err;
+            return  err;
     }
     finally{
         await db.close();

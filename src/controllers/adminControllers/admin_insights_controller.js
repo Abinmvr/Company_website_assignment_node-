@@ -15,8 +15,8 @@ const get_insight_Controller = async(req,res)=>{
 }
 
 const get_insights_controller_ById = async(req,res)=>{
-    const id = req.query.id;
     try{
+        const id = req.query.id;
         if((!id)){
             res.status(200).send({success:false,message:"id is empty"});
         }
@@ -36,10 +36,10 @@ const get_insights_controller_ById = async(req,res)=>{
 }
 
 const add_insights_Controller = async(req,res)=>{
-    const {title,details,image} = req.body;
-    const addData ={'title':title,'details':details,'image':image};
-    console.log(addData);
     try{
+        const {title,details} = req.body;
+        const image=req.file.filename;
+        const addData ={'title':title,'details':details,'image':image};
         if((!title)||(!details)||(!image)){
             res.status(200).send({success:false,message:"fields cannot be empty"});
         }
@@ -55,9 +55,10 @@ const add_insights_Controller = async(req,res)=>{
     
     }
 }
+
 const delete_insights_Controller = async(req,res)=>{
-    const id = req.query.id;
     try{
+        const id = req.query.id;
         if((!id)){
             res.status(200).send({success:false,message:"id is empty"});
         }
@@ -75,12 +76,16 @@ const delete_insights_Controller = async(req,res)=>{
 }
 
 const update_insights_Controller = async(req,res)=>{
-    const {id,title,details,image} = req.body;
-    const editData ={'id':id,'title':title,'details':details,'image':image};
-    console.log(editData)
-    
     try{
-        if((!title)||(!details)||(!image)||(!id)){
+        const {id,title,details} = req.body;
+        let image
+        if(req.file==undefined){
+            image ='';
+        }else{
+            image=req.file.filename;
+        }
+        const editData ={'id':id,'title':title,'details':details,'image':image};
+        if((!title)||(!details)||(!id)){
             res.status(200).send({success:false,message:"fields cannot be empty"});
         }
         else{

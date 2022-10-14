@@ -7,7 +7,7 @@ const signup = async(signupdata)=>{
         return 'success';
     }
     catch(err){
-            throw  err;
+            return  err;
     }
     finally{
         await db.close();
@@ -21,7 +21,8 @@ const login = async(logdata)=>{
         return log_data;
     }
     catch(err){
-            throw err;     
+            // throw err; 
+            return  err;    
     }
     finally{   
             await db.close();

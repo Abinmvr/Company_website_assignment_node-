@@ -14,6 +14,7 @@ const admin_getjob_Controller = async(req,res)=>{
         res.status(500).json({success:false,message:'Internal server error'});
     }
 }
+
 const get_positions_controller = async(req,res)=>{
     try{
         const result = await get_positions_model();
@@ -25,8 +26,8 @@ const get_positions_controller = async(req,res)=>{
 }
 
 const get_job_controller_ById = async(req,res)=>{
-const id = req.query.id;
 try{
+    const id = req.query.id;
     if((!id)){
         res.status(200).send({success:false,message:"id is empty"});
     }
@@ -46,15 +47,13 @@ catch(e){
 }
 
 const add_job_Controller = async(req,res)=>{
-const {position_id,location,details,expire,experience}= req.body;
-const addData ={position_id:position_id,
-                location:location,
-                details:details,
-                expire:expire,
-                experience:experience};
-                console.log('job',addData);
-
-try{
+try{   
+    const {position_id,location,details,expire,experience}= req.body;
+    const addData ={position_id:position_id,
+                    location:location,
+                    details:details,
+                    expire:expire,
+                    experience:experience};
     if((!position_id)||(!location)||(!details)||(!expire)||(!experience)){
         res.status(200).send({success:false,message:"fields cannot be empty"});
     }
@@ -72,8 +71,8 @@ catch(error){
 }
 
 const delete_job_Controller = async(req,res)=>{
-const id = req.query.id;
 try{
+    const id = req.query.id;
     if((!id)){
         res.status(200).send({success:false,message:"id is empty"});
     }
@@ -91,10 +90,10 @@ catch(error){
 }
 
 const update_job_Controller = async(req,res)=>{
-const {id,description,location,expire_date,experience_in_years} = req.body;
-const editData ={'id':id,'location':location,'experience':experience_in_years,'details':description,'expire':expire_date};
-
 try{
+    const {id,description,location,expire_date,experience_in_years} = req.body;
+    const editData ={'id':id,'location':location,'experience':experience_in_years,'details':description,'expire':expire_date};
+    
     if((!location)||(!description)||(!id)||(!experience_in_years)||(!expire_date)){
         res.status(200).send({success:false,message:"fields cannot be empty"});
     }

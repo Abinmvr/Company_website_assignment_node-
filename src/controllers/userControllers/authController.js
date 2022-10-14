@@ -5,9 +5,9 @@ createToken = (id)=>{
 }
 
 const signupController =async(req,res)=>{
-    const {username,email,password} = req.body;
-    const signupdata ={'username':username,'email':email,'password':password};
     try{ 
+        const {username,email,password} = req.body;
+        const signupdata ={'username':username,'email':email,'password':password};
         if((!username)||(!email)||(!password)){
             res.status(200).send({success:false,message:"Fields cannot be empty"});
         }

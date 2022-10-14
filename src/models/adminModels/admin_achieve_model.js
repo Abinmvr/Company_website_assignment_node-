@@ -36,7 +36,7 @@ const add_Achieve_model = async(addData)=>{
         return 'success';
     }
     catch(err){
-            throw  err;
+            return  err;
     }
     finally{
         await db.close();
@@ -60,13 +60,23 @@ const delete_achieve_model = async(id)=>{
 const update_achievements_model = async(editData)=>{
         const db = await createdb();
         try{
-            const update_query=("UPDATE achievements SET title = ?, image =?, details =? WHERE id =?");
-            await db.query(update_query,[editData.title,editData.image,editData.details,editData.id]);
-
+            const update_query = "UPDATE achievements SET title =?,details =?"
+            const update_id =" WHERE id =?"
+            const image_query =",image =?"
+            let data, update_table;
+            if(editData.image!==''){
+                update_table=update_query+image_query+update_id;
+                data =[editData.title,editData.details,editData.image,editData.id];
+            }
+            else{
+                update_table=update_query+update_id;
+                data =[editData.title,editData.details,editData.id]
+            }
+            await db.query(update_table,data);
             return 'success';
         }
         catch(err){
-                throw  err;
+                return  err;
         }
         finally{
             await db.close();

@@ -57,7 +57,7 @@ const add_job_model = async(addData)=>{
         return 'success';
     }
     catch(err){
-            throw  err;
+            return  err;
     }
     finally{
         await db.close();
